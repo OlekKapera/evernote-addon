@@ -1,4 +1,4 @@
-package com.example.evernoteaddon
+package com.aleksanderkapera.evernoteaddon
 
 import android.app.Application
 
