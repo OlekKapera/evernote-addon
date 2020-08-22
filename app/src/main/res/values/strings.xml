@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Evernote Addon</string>
+
+    <string name="error_permissions_not_granted">You need to accept permissions for the app to work properly.</string>
 </resources>
