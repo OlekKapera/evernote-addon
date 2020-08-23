@@ -23,7 +23,7 @@ import com.aleksanderkapera.evernoteaddon.util.REQUEST_PERMISSION_CODE
 import com.aleksanderkapera.evernoteaddon.util.asString
 import com.aleksanderkapera.evernoteaddon.util.snack
 import com.aleksanderkapera.evernoteaddon.viewmodel.MainFragmentViewModel
-import com.google.android.material.snackbar.Snackbar
+import com.evernote.android.intent.EvernoteIntent
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
@@ -72,7 +72,10 @@ class MainFragment : Fragment() {
                     viewModel.convertedSpeech = resultString
 
                     binding.root.snack(resultString)
-                    startActivity(viewModel.getNoteIntent(resultString))
+                    if (EvernoteIntent.isEvernoteInstalled(App.context))
+                        startActivity(viewModel.getNoteIntent(resultString))
+                    else
+                        binding.root.snack(R.string.error_evernote_not_installed.asString())
                 }
             })
 
@@ -97,10 +100,7 @@ class MainFragment : Fragment() {
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     Log.i(MainFragment::class.simpleName, "Permission has been denied by user")
                 } else {
-                    binding.root.snack(
-                        R.string.error_permissions_not_granted.asString(),
-                        Snackbar.LENGTH_LONG
-                    )
+                    binding.root.snack(R.string.error_permissions_not_granted.asString())
                     Log.i(MainFragment::class.simpleName, "Permission has been granted by user")
                 }
             }
