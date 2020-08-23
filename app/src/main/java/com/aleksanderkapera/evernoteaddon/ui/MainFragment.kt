@@ -66,11 +66,13 @@ class MainFragment : Fragment() {
                 override fun onEvent(p0: Int, p1: Bundle?) {}
 
                 override fun onResults(results: Bundle?) {
-                    viewModel.convertedSpeech = results?.getStringArrayList(
+                    val resultString = results?.getStringArrayList(
                         SpeechRecognizer.RESULTS_RECOGNITION
-                    )?.first()
+                    )?.first() ?: ""
+                    viewModel.convertedSpeech = resultString
 
-                    binding.root.snack(viewModel.convertedSpeech ?: "")
+                    binding.root.snack(resultString)
+                    startActivity(viewModel.getNoteIntent(resultString))
                 }
             })
 
