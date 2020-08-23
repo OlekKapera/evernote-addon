@@ -15,15 +15,20 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.aleksanderkapera.evernoteaddon.App
 import com.aleksanderkapera.evernoteaddon.R
 import com.aleksanderkapera.evernoteaddon.databinding.FragmentMainBinding
 import com.aleksanderkapera.evernoteaddon.util.REQUEST_PERMISSION_CODE
 import com.aleksanderkapera.evernoteaddon.util.asString
+import com.aleksanderkapera.evernoteaddon.util.snack
+import com.aleksanderkapera.evernoteaddon.viewmodel.MainFragmentViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
+
+    private val viewModel: MainFragmentViewModel by viewModels()
 
     private lateinit var binding: FragmentMainBinding
     private val recognizer = SpeechRecognizer.createSpeechRecognizer(App.context)
@@ -61,10 +66,11 @@ class MainFragment : Fragment() {
                 override fun onEvent(p0: Int, p1: Bundle?) {}
 
                 override fun onResults(results: Bundle?) {
-                    val result = results?.getStringArrayList(
+                    viewModel.convertedSpeech = results?.getStringArrayList(
                         SpeechRecognizer.RESULTS_RECOGNITION
-                    )
-                    Log.d("aa", "results: $result")
+                    )?.first()
+
+                    binding.root.snack(viewModel.convertedSpeech ?: "")
                 }
             })
 
@@ -89,8 +95,7 @@ class MainFragment : Fragment() {
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     Log.i(MainFragment::class.simpleName, "Permission has been denied by user")
                 } else {
-                    Snackbar.make(
-                        binding.root,
+                    binding.root.snack(
                         R.string.error_permissions_not_granted.asString(),
                         Snackbar.LENGTH_LONG
                     )
