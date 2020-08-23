@@ -26,6 +26,13 @@ import kotlinx.android.synthetic.main.fragment_main.*
 class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
+    private val recognizer = SpeechRecognizer.createSpeechRecognizer(App.context)
+    private val recognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+        putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,37 +49,16 @@ class MainFragment : Fragment() {
 
         checkPermissions()
 
-        val recognizer = SpeechRecognizer.createSpeechRecognizer(App.context)
-
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(
-                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-            )
-        }
-
         recognizer.setRecognitionListener(
             object : RecognitionListener {
-                override fun onReadyForSpeech(p0: Bundle?) {
-                    Log.d("aa", "red")
-                }
-
-                override fun onBeginningOfSpeech() {
-                    Log.d("aa", "beg")
-                }
-
-                override fun onRmsChanged(p0: Float) {
-                }
-
-                override fun onBufferReceived(p0: ByteArray?) {
-                }
-
-                override fun onEndOfSpeech() {
-                    Log.d("aa", "end")
-                }
-
-                override fun onError(p0: Int) {
-                }
+                override fun onReadyForSpeech(p0: Bundle?) {}
+                override fun onBeginningOfSpeech() {}
+                override fun onRmsChanged(p0: Float) {}
+                override fun onBufferReceived(p0: ByteArray?) {}
+                override fun onEndOfSpeech() {}
+                override fun onError(p0: Int) {}
+                override fun onPartialResults(p0: Bundle?) {}
+                override fun onEvent(p0: Int, p1: Bundle?) {}
 
                 override fun onResults(results: Bundle?) {
                     val result = results?.getStringArrayList(
@@ -80,20 +66,17 @@ class MainFragment : Fragment() {
                     )
                     Log.d("aa", "results: $result")
                 }
-
-                override fun onPartialResults(p0: Bundle?) {
-                    Log.d("aa", "par")
-                }
-
-                override fun onEvent(p0: Int, p1: Bundle?) {
-                }
             })
 
-        mainFragment_button.setOnClickListener {
-            recognizer.startListening(intent)
-        }
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mainFragment_button.setOnClickListener {
+            recognizer.startListening(recognizerIntent)
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -104,19 +87,22 @@ class MainFragment : Fragment() {
         when (requestCode) {
             REQUEST_PERMISSION_CODE -> {
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Log.i("aa", "Permission has been denied by user")
+                    Log.i(MainFragment::class.simpleName, "Permission has been denied by user")
                 } else {
                     Snackbar.make(
                         binding.root,
                         R.string.error_permissions_not_granted.asString(),
                         Snackbar.LENGTH_LONG
                     )
-                    Log.i("aa", "Permission has been granted by user")
+                    Log.i(MainFragment::class.simpleName, "Permission has been granted by user")
                 }
             }
         }
     }
 
+    /**
+     * Request required permissions from user if they haven't been already granted
+     */
     private fun checkPermissions() {
         val permission =
             ContextCompat.checkSelfPermission(App.context, Manifest.permission.RECORD_AUDIO)
