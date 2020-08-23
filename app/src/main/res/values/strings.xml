@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Evernote Addon</string>
 
+    <!--KEY WORDS-->
+    <string name="key_word_title">title</string>
+
     <string name="error_permissions_not_granted">You need to accept permissions for the app to work properly.</string>
     <string name="error_evernote_not_installed">You need to install Evernote application and sign in for this app to work properly.</string>
 </resources>

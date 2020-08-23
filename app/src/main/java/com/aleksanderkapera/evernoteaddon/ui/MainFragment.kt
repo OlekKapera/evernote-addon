@@ -24,6 +24,7 @@ import com.aleksanderkapera.evernoteaddon.util.asString
 import com.aleksanderkapera.evernoteaddon.util.snack
 import com.aleksanderkapera.evernoteaddon.viewmodel.MainFragmentViewModel
 import com.evernote.android.intent.EvernoteIntent
+import com.evernote.android.intent.EvernoteIntentResult
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
