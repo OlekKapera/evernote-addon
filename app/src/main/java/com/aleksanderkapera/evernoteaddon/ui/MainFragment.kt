@@ -16,21 +16,25 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.aleksanderkapera.evernoteaddon.App
 import com.aleksanderkapera.evernoteaddon.R
 import com.aleksanderkapera.evernoteaddon.databinding.FragmentMainBinding
+import com.aleksanderkapera.evernoteaddon.util.INTENT_ACTION_OPEN_MAIN_FRAGMENT
 import com.aleksanderkapera.evernoteaddon.util.REQUEST_PERMISSION_CODE
 import com.aleksanderkapera.evernoteaddon.util.asString
 import com.aleksanderkapera.evernoteaddon.util.snack
 import com.aleksanderkapera.evernoteaddon.viewmodel.MainFragmentViewModel
 import com.evernote.android.intent.EvernoteIntent
-import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
 
     private val viewModel: MainFragmentViewModel by viewModels()
 
     private lateinit var binding: FragmentMainBinding
+    private lateinit var navController: NavController
+
     private val recognizer = SpeechRecognizer.createSpeechRecognizer(App.context)
     private val recognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
         putExtra(
@@ -51,7 +55,13 @@ class MainFragment : Fragment() {
                 container,
                 false
             )
+        navController = findNavController()
 
+        when (arguments?.getString("extra")) {
+            INTENT_ACTION_OPEN_MAIN_FRAGMENT -> {
+            }
+            else -> navController.navigate(MainFragmentDirections.navActionMainToSettings())
+        }
         checkPermissions()
 
         recognizer.setRecognitionListener(
@@ -79,15 +89,9 @@ class MainFragment : Fragment() {
                 }
             })
 
+        recognizer.startListening(recognizerIntent)
+
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        mainFragment_button.setOnClickListener {
-            recognizer.startListening(recognizerIntent)
-        }
     }
 
     override fun onRequestPermissionsResult(

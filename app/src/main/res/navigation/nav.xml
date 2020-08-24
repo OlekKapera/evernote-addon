@@ -9,5 +9,26 @@
         android:id="@+id/mainFragment"
         android:name="com.aleksanderkapera.evernoteaddon.ui.MainFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main">
+
+        <action
+            android:id="@+id/nav_action_mainToSettings"
+            app:destination="@id/settings_navigation"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="mainFragmentArg"
+            app:argType="string" />
+    </fragment>
+
+
+    <navigation
+        android:id="@+id/settings_navigation"
+        app:startDestination="@id/settingsFragment">
+
+        <fragment
+            android:id="@+id/settingsFragment"
+            android:name="com.aleksanderkapera.evernoteaddon.ui.SettingsFragment"
+            android:label="fragment_settings"
+            tools:layout="@layout/fragment_settings" />
+    </navigation>
 </navigation>
