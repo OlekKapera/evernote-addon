@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/colorPrimary" />
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/spacing8"
+        android:drawable="@drawable/ic_mic"
+        android:end="@dimen/spacing8"
+        android:start="@dimen/spacing8"
+        android:top="@dimen/spacing8" />
+</layer-list>
