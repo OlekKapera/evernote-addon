@@ -63,4 +63,7 @@ dependencies {
 
     // SpinKit
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
+    // PulseView
+    implementation 'com.github.devlight.pulseview:library:1.0.2'
 }

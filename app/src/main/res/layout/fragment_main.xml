@@ -2,19 +2,36 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@android:color/transparent"
+        android:gravity="center">
 
-        <com.github.ybq.android.spinkit.SpinKitView
-            style="@style/SpinKitView.ThreeBounce"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:SpinKit_Color="@color/colorAccent"
-            android:layout_marginTop="@dimen/spacing32"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <!--        <com.github.ybq.android.spinkit.SpinKitView-->
+        <!--            style="@style/SpinKitView.ThreeBounce"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:SpinKit_Color="@color/colorAccent"-->
+        <!--            android:layout_marginTop="@dimen/spacing32"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.gigamole.library.PulseView
+            android:id="@+id/pulseView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:pv_alpha="70"
+            app:pv_color="@color/colorPrimary"
+            app:pv_count="8"
+            app:pv_icon="@drawable/ic_mic"
+            app:pv_icon_height="@dimen/iconSize48"
+            app:pv_icon_width="@dimen/iconSize48"
+            app:pv_interpolator="@android:anim/linear_interpolator"
+            app:pv_measure="height"
+            app:pv_spawn_period="700" />
+    </RelativeLayout>
 </layout>

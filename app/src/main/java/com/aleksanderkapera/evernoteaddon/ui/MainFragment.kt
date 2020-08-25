@@ -1,7 +1,6 @@
 package com.aleksanderkapera.evernoteaddon.ui
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -12,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -22,13 +22,10 @@ import androidx.navigation.fragment.findNavController
 import com.aleksanderkapera.evernoteaddon.App
 import com.aleksanderkapera.evernoteaddon.R
 import com.aleksanderkapera.evernoteaddon.databinding.FragmentMainBinding
-import com.aleksanderkapera.evernoteaddon.util.INTENT_ACTION_OPEN_MAIN_FRAGMENT
-import com.aleksanderkapera.evernoteaddon.util.REQUEST_PERMISSION_CODE
-import com.aleksanderkapera.evernoteaddon.util.asString
-import com.aleksanderkapera.evernoteaddon.util.snack
+import com.aleksanderkapera.evernoteaddon.util.*
 import com.aleksanderkapera.evernoteaddon.viewmodel.MainFragmentViewModel
 import com.evernote.android.intent.EvernoteIntent
-import java.lang.reflect.Method
+import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
 
@@ -57,17 +54,16 @@ class MainFragment : Fragment() {
                 container,
                 false
             )
+        binding.root.layoutParams = ViewGroup.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT
+        )
         navController = findNavController()
 
-        when (arguments?.getBoolean(INTENT_ACTION_OPEN_MAIN_FRAGMENT)) {
-            true -> {
+        if (arguments?.getString(INTENT_EXTRAS_ACTION) != INTENT_ACTION_OPEN_MAIN_FRAGMENT)
+        //open settings
+            navController.navigate(MainFragmentDirections.navActionMainToSettings())
 
-            }
-            else -> {
-                // open settings
-                navController.navigate(MainFragmentDirections.navActionMainToSettings())
-            }
-        }
         checkPermissions()
 
         recognizer.setRecognitionListener(
@@ -98,6 +94,11 @@ class MainFragment : Fragment() {
         recognizer.startListening(recognizerIntent)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        pulseView.startPulse()
     }
 
     override fun onRequestPermissionsResult(

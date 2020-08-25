@@ -6,8 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.aleksanderkapera.evernoteaddon.R
 import com.aleksanderkapera.evernoteaddon.util.INTENT_ACTION_OPEN_MAIN_FRAGMENT
-
-//import com.aleksanderkapera.evernoteaddon.databinding.ActivityMainBinding
+import com.aleksanderkapera.evernoteaddon.util.INTENT_EXTRAS_ACTION
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +20,9 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val extras = Bundle().apply { putString(INTENT_EXTRAS_ACTION, intent.action) }
         navController = findNavController(R.id.fragment_navigation)
-        navController.setGraph(R.navigation.nav, intent.extras)
+        navController.setGraph(R.navigation.nav, extras)
     }
 }

@@ -7,9 +7,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Theme.Transparent" parent="AppTheme">
+    <style name="Theme.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@drawable/bg_listening_gradient</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="backgroundColor">@android:color/transparent</item>
+        <item name="background">@android:color/transparent</item>
+        <item name="android:colorBackgroundFloating">@android:color/transparent</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+<!--        <item name="colorOnBackground">@android:color/transparent</item>-->
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
