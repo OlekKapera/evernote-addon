@@ -1,6 +1,7 @@
 package com.aleksanderkapera.evernoteaddon.ui
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -27,6 +28,7 @@ import com.aleksanderkapera.evernoteaddon.util.asString
 import com.aleksanderkapera.evernoteaddon.util.snack
 import com.aleksanderkapera.evernoteaddon.viewmodel.MainFragmentViewModel
 import com.evernote.android.intent.EvernoteIntent
+import java.lang.reflect.Method
 
 class MainFragment : Fragment() {
 
@@ -57,10 +59,14 @@ class MainFragment : Fragment() {
             )
         navController = findNavController()
 
-        when (arguments?.getString("extra")) {
-            INTENT_ACTION_OPEN_MAIN_FRAGMENT -> {
+        when (arguments?.getBoolean(INTENT_ACTION_OPEN_MAIN_FRAGMENT)) {
+            true -> {
+
             }
-            else -> navController.navigate(MainFragmentDirections.navActionMainToSettings())
+            else -> {
+                // open settings
+                navController.navigate(MainFragmentDirections.navActionMainToSettings())
+            }
         }
         checkPermissions()
 

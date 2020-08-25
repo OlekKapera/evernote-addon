@@ -54,9 +54,7 @@ internal fun updateAppWidget(
 }
 
 private fun getMainFragmentIntent(context: Context): PendingIntent {
-    val intent = Intent(context, MainActivity::class.java).putExtra(
-        "extra",
-        INTENT_ACTION_OPEN_MAIN_FRAGMENT
-    )
+    val intent = Intent(context, MainActivity::class.java)
+    intent.action = INTENT_ACTION_OPEN_MAIN_FRAGMENT
     return PendingIntent.getActivity(context, INTENT_OPEN_MAIN_ACTIVITY, intent, 0)
 }

@@ -60,4 +60,7 @@ dependencies {
 
     // Evernote
     implementation 'com.evernote:android-intent:1.0.1'
+
+    // SpinKit
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }
